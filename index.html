@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>RDVSP V4</title>
+  <style>
+    body {
+      background-color: #0a0018;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .header {
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(90deg, #520065, #8a00d4);
+    }
+    .card {
+      margin: 20px auto;
+      width: 300px;
+      background: #b00086;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 0 15px rgba(255,0,255,0.4);
+    }
+    .card img {
+      width: 80px;
+      border-radius: 50%;
+    }
+    .card h3 {
+      margin: 10px 0 5px 0;
+    }
+    .form-box {
+      margin: 20px auto;
+      width: 320px;
+      background: #1a0028;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,0,255,0.3);
+      text-align: left;
+    }
+    .form-box label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #ff9cff;
+    }
+    .form-box input, .form-box select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      background: #32004f;
+      color: #fff;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #ff00b3;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(255,0,200,0.6);
+    }
+    .btn:hover {
+      background: #ff33cc;
+    }
+
+    /* popup modal */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal {
+      background: linear-gradient(180deg,#22002b,#3a003f);
+      padding: 20px 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+      color: #fff;
+      text-align: center;
+      min-width: 260px;
+    }
+    .modal h2 { margin: 0 0 6px 0; font-size: 20px; }
+    .modal p { margin: 0 0 12px 0; color: #ffd9f5; }
+    .countdown {
+      font-weight: bold;
+      font-size: 28px;
+      color: #ffb3ee;
+    }
+    .close-btn {
+      margin-top: 12px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: none;
+      background : #ff00b3;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">X CRASHER V2</div>
+  
+  <div class="card">
+    <img src="hii.jpeg" alt="Avatar">
+    <h3>X CRASHER</h3>
+    <p>Role: MODERATOR - Exp: 2026-08-17</p>
+  </div>
+
+  <div class="form-box">
+    <label>Target Number</label>
+    <input id="target" type="text" placeholder="+628xxxxxxx">
+    
+    <label>Select Bug</label>
+    <select id="bug">
+      <option>Crash Infinity</option>
+      <option>Freeze Device</option>
+      <option>Spam Popup</option>
+    </select>
+    
+    <button id="sendBtn" class="btn">SEND BUG</button>
+  </div>
+
+  <!-- Overlay + Modal -->
+  <div id="overlay" class="overlay" role="dialog" aria-modal="true">
+    <div class="modal" id="modal">
+      <h2 id="modalTitle">JEDA</h2>
+      <p id="modalText">Menunggu...</p>
+      <div class="countdown" id="countdown">3content://com.android.externalstorage.documents/tree/primary%3Akwjdhdh::primary:kwjdhdh/untitled.html</div>
+      <button id="closeModal" class="close-btn" style="display:none">Tutup</button>
+    </div>
+  </div>
+
+  <script>
+    const sendBtn = document.getElementById('sendBtn');
+    const overlay = document.getElementById('overlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalText = document.getElementById('modalText');
+    const countdownEl = document.getElementById('countdown');
+    const closeModal = document.getElementById('closeModal');
+
+    sendBtn.addEventListener('click', () => {
+      // Disable button supaya ga spam
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'PROCESSING...';
+
+      // Tampilkan overlay dan countdown 3 detik
+      overlay.style.display = 'flex';
+      modalTitle.textContent = 'SENDING BUG';
+      modalText.textContent = 'Tunggu sebentar...';
+      countdownEl.style.display = 'block';
+      closeModal.style.display = 'none';
+
+      let counter = 3;
+      countdownEl.textContent = counter;
+
+      const interval = setInterval(() => {
+        counter--;
+        if (counter <= 0) {
+          clearInterval(interval);
+          // Setelah 3 detik -> tampilkan BUG DONE ✅
+          modalTitle.textContent = 'BUG DONE ✅';
+          modalText.textContent = 'Selesai — payload terkirim.';
+          countdownEl.style.display = 'none';
+          closeModal.style.display = 'inline-block';
+          sendBtn.textContent = 'SEND BUG';
+          sendBtn.disabled = false;
+        } else {
+          countdownEl.textContent = counter;
+        }
+      }, 1000);
+    });
+
+    // tutup modal
+    closeModal.addEventListener('click', () => {
+      overlay.style.display = 'none';
+    });
+
+    // support escape to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') overlay.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
